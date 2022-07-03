@@ -1,7 +1,8 @@
 <template>
-  <div class="node" :class="{ selected }">
-
-  </div>
+  <div
+    class="node"
+    :class="{ selected }"
+  />
 </template>
 
 <script setup lang="ts">

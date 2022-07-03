@@ -1,11 +1,12 @@
-import {DefineComponent} from "vue";
+import { DefineComponent } from "vue";
 import LightUp from "@/puzzles/lightup";
 import Nurikabe from "@/puzzles/nurikabe";
-import {Puzzle} from "@/models/puzzle";
+import { Puzzle } from "@/models/puzzle";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
 export type Component = DefineComponent<{}, {}, any>;
 
 export const Puzzles: { [key: string]: Puzzle } = {
     lightup: new LightUp(),
     nurikabe: new Nurikabe()
-}
+};

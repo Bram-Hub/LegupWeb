@@ -1,7 +1,7 @@
 <template>
-    <h1>Legup</h1>
-    <p>Welcome to Legup!</p>
-    <button @click="switchToSelect">Get Started!</button>
+  <h1>Legup</h1>
+  <p>Welcome to Legup!</p>
+  <button @click="switchToSelect">Get Started!</button>
 </template>
 
 <script setup lang="ts">
@@ -12,7 +12,7 @@ const router = useRouter();
 const switchToSelect = () => {
     router.push({
         name: "puzzle-selector"
-    })
+    });
 };
 
 </script>

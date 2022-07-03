@@ -1,5 +1,5 @@
 <template>
-    <component :is="getPuzzle()"></component>
+  <component :is="getPuzzle()" />
 </template>
 
 <script setup lang="ts">

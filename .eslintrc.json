@@ -1,0 +1,39 @@
+{
+    "extends": [
+        "plugin:vue/vue3-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+        "vue/html-indent": [
+            "error",
+            2
+        ],
+        "vue/singleline-html-element-content-newline": [
+            "off"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "brace-style": [
+            "error",
+            "stroustrup"
+        ]
+    },
+    "parser": "vue-eslint-parser",
+    "parserOptions": {
+        "parser": "@typescript-eslint/parser"
+    }
+}

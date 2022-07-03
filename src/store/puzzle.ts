@@ -2,7 +2,7 @@ import { Board } from "@/models/puzzle";
 import { defineStore } from "pinia";
 
 
-export const usePuzzleStore = defineStore('puzzle', {
+export const usePuzzleStore = defineStore("puzzle", {
     state: () => {
         return {
             board: {} as Board,
