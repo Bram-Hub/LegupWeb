@@ -1,7 +1,4 @@
-import { DefineComponent } from "vue";
-import LightUp from "@/puzzles/lightup";
-import Nurikabe from "@/puzzles/nurikabe";
-import {BasicRule, CaseRule, ContradictionRule} from "@/models/rules";
+import { BasicRule, CaseRule, ContradictionRule } from "@/models/rules";
 import { Component } from "@/types";
 
 
@@ -13,13 +10,13 @@ export interface Location {
 //export type Board = Array<PuzzleElement<any>>;
 
 export abstract class Board {
-    elements: (PuzzleElement<any> | null)[];
-    modified: Set<PuzzleElement<any>>;
+    elements: (PuzzleElement<any> | null)[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    modified: Set<PuzzleElement<any>>; // eslint-disable-line @typescript-eslint/no-explicit-any
     modifiable: boolean;
 
     protected constructor() {
         this.elements = [];
-        this.modified = new Set<PuzzleElement<any>>();
+        this.modified = new Set<PuzzleElement<any>>(); // eslint-disable-line @typescript-eslint/no-explicit-any
         this.modifiable = true;
     }
 }
@@ -52,12 +49,10 @@ export class GridCell<T> extends PuzzleElement<T> {
 
     constructor(data: T, x: number, y: number) {
         super(data);
-        this.location = {x, y};
+        this.location = { x, y };
     }
 }
 
-
-//export type Cell = " " | "💡" | "•" | number;
 export abstract class Puzzle {
     boardView: Component;
     board: Board | null;

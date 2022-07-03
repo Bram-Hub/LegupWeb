@@ -1,11 +1,11 @@
 <template>
-    <h1>Legup</h1>
-    <Board id="board" />
-    <button @click="buildPuzzle">make a puzzle</button>
+  <h1>Legup</h1>
+  <Board id="board" />
+  <button @click="buildPuzzle">make a puzzle</button>
 </template>
 
 <script setup lang="ts">
-import Board from "@/components/Board.vue";
+import Board from "@/components/TheBoard.vue";
 import { usePuzzleStore } from "@/store/puzzle";
 
 const puzzle = usePuzzleStore();
@@ -18,7 +18,7 @@ const buildPuzzle = () => {
             puzzle.board[i][j] = Math.floor(Math.random() * 9);
         }
     }
-}
+};
 
 </script>
 

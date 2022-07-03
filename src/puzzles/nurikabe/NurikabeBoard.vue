@@ -1,57 +1,25 @@
 <template>
-    <table class="board-table">
-        <tr v-for="(boardRow, rowIdx) in puzzle.board" v-bind:key="rowIdx" class="cell-rw">
-            <td v-for="(boardCell, cellIdx) in boardRow" v-bind:key="cellIdx" class="cell-td">
-                <div
-                    class="cell"
-                    @click="$emit('leftClick', rowIdx, cellIdx)"
-                    :class="{ lit: isLit(rowIdx, cellIdx), solid: isSolid(rowIdx, cellIdx) }"
-                    @contextmenu.prevent="$emit('rightClick', rowIdx, cellIdx)"
-                >
-                    <div 
-                        class="cell-inner-wrapper"
-                        :class="{ 'white-text': isSolid(rowIdx, cellIdx) }"
-                    >
-                        {{ typeof(boardCell) === "number" && boardCell === 0 ? "" : boardCell }}
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
+  <table class="board-table">
+    <tr
+      v-for="(boardRow, rowIdx) in puzzle.board"
+      :key="rowIdx"
+      class="cell-rw"
+    >
+      <td
+        v-for="(boardCell, cellIdx) in boardRow"
+        :key="cellIdx"
+        class="cell-td"
+      >
+        <p>WIP</p>
+      </td>
+    </tr>
+  </table>
 </template>
 
 <script setup lang="ts">
 import { usePuzzleStore } from "@/store/puzzle";
-//import { Cell } from "@/types";
-import Vue from "vue";
-
-// const props = defineProps<{
-//     board: Array<Array<Cell>>
-// }>();
 
 const puzzle = usePuzzleStore();
-
-const isLit = (row: number, col: number) => {
-    for (let i = 0; i < puzzle.board.length; i++) {
-        if (puzzle.board[i][col] === "💡") {
-            return true;
-        }
-    }
-    for (let i = 0; i < puzzle.board[row].length; i++) {
-        if (puzzle.board[row][i] === "💡") {
-            return true;
-        }
-    }
-    return false;
-};
-
-const isSolid = (row: number, col: number) => {
-    return typeof(puzzle.board[row][col]) === "number";
-}
-
-// const updateCell = (row: number, col: number) => {
-//     props.board[row][col] = Math.floor(Math.random() * 9);
-// };
 
 </script>
 

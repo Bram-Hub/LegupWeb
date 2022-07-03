@@ -1,13 +1,13 @@
 <template>
-
+  <p>WIP</p>
 </template>
 
 <script setup lang="ts">
 
 
-const props = defineProps<{
-  cell:
-}>();
+// const props = defineProps<{
+//   cell:
+// }>();
 
 
 </script>
