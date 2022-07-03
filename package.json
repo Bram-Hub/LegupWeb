@@ -6,7 +6,9 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "eslint --ext .ts,.vue src tests",
+    "lint-fix": "eslint --ext .ts,.vue src tests --fix"
   },
   "dependencies": {
     "pinia": "^2.0.14",
