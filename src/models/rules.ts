@@ -2,9 +2,9 @@
 
 export abstract class Rule {
     // maybe ID
-    name: string;
-    description: string;
-    image: string;
+    protected name: string;
+    protected description: string;
+    protected image: string;
 
     constructor(name: string, description: string, image: string) {
         this.name = name;
