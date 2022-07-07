@@ -10,19 +10,20 @@
         :key="cellIdx"
         class="cell-td"
       >
-        <div
-          class="cell"
-          :class="{ lit: isLit(rowIdx, cellIdx), solid: isSolid(rowIdx, cellIdx) }"
-          @click="emit('leftClick', rowIdx, cellIdx)"
-          @contextmenu.prevent="emit('rightClick', rowIdx, cellIdx)"
-        >
-          <div 
-            class="cell-inner-wrapper"
-            :class="{ 'white-text': isSolid(rowIdx, cellIdx) }"
-          >
-            {{ typeof(boardCell) === "number" && boardCell === 0 ? "" : boardCell }}
-          </div>
-        </div>
+<!--        <div-->
+<!--          class="cell"-->
+<!--          :class="{ lit: isLit(rowIdx, cellIdx), solid: isSolid(rowIdx, cellIdx) }"-->
+<!--          @click="emit('leftClick', rowIdx, cellIdx)"-->
+<!--          @contextmenu.prevent="emit('rightClick', rowIdx, cellIdx)"-->
+<!--        >-->
+<!--          <div -->
+<!--            class="cell-inner-wrapper"-->
+<!--            :class="{ 'white-text': isSolid(rowIdx, cellIdx) }"-->
+<!--          >-->
+<!--            {{ typeof(boardCell) === "number" && boardCell === 0 ? "" : boardCell }}-->
+<!--          </div>-->
+<!--        </div>-->
+        <LightUpCell :cell="boardCell" />
       </td>
     </tr>
   </table>
@@ -30,32 +31,11 @@
 
 <script setup lang="ts">
 import { usePuzzleStore } from "@/store/puzzle";
+import LightUpCell from "@/puzzles/lightup/LightUpCell.vue";
 
 const puzzle = usePuzzleStore();
 
-const isLit = (row: number, col: number) => {
-    for (let i = 0; i < puzzle.board.length; i++) {
-        if (puzzle.board[i][col] === "💡") {
-            return true;
-        }
-    }
-    for (let i = 0; i < puzzle.board[row].length; i++) {
-        if (puzzle.board[row][i] === "💡") {
-            return true;
-        }
-    }
-    return false;
-};
-
-const isSolid = (row: number, col: number) => {
-    return typeof(puzzle.board[row][col]) === "number";
-};
-
 const emit = defineEmits(["leftClick", "rightClick"]);
-
-// const updateCell = (row: number, col: number) => {
-//     props.board[row][col] = Math.floor(Math.random() * 9);
-// };
 
 </script>
 

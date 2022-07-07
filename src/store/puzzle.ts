@@ -1,4 +1,4 @@
-import { Board } from "@/models/puzzle";
+import {Board, Puzzle} from "@/models/puzzle";
 import { defineStore } from "pinia";
 
 
@@ -8,5 +8,10 @@ export const usePuzzleStore = defineStore("puzzle", {
             board: {} as Board,
             currentPuzzle: null as string | null
         };
+    },
+    actions: {
+        setPuzzle(puzzle: Puzzle) {
+            
+        }
     }
 });

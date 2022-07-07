@@ -1,0 +1,14 @@
+{
+    "puzzle": "lightup",
+    "board": {
+        "width": 10,
+        "height": 10,
+        "data": [
+            {
+                "x": 1,
+                "y": 1,
+                "val": 3
+            }
+        ]
+    }
+}

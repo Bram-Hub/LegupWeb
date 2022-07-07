@@ -1,10 +1,24 @@
 import { BasicRule, CaseRule, ContradictionRule } from "@/models/rules";
 import { Component } from "@/types";
+import {Tree} from "@/models/tree";
 
 
-export interface Location {
-    x: number;
-    y: number;
+export class Location {
+    private x: number;
+    private y: number;
+
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public getX(): number {
+        return this.x;
+    }
+
+    public getY(): number {
+        return this.y;
+    }
 }
 
 //export type Board = Array<PuzzleElement<any>>;
@@ -37,25 +51,30 @@ export class GridBoard extends Board {
 
 
 export abstract class PuzzleElement<T> {
-    private data: T;
+    protected data: T;
 
     protected constructor(data: T) {
         this.data = data;
     }
+
+    public getData(): T {
+        return this.data;
+    }
 }
 
 export class GridCell<T> extends PuzzleElement<T> {
-    private location: Location;
+    protected location: Location;
 
-    constructor(data: T, x: number, y: number) {
+    constructor(data: T, location: Location) {
         super(data);
-        this.location = { x, y };
+        this.location = location;
     }
 }
 
 export abstract class Puzzle {
     private boardView: Component;
-    private board: Board | null;
+    private currentBoard: Board | null;
+    private tree: Tree | null;
     private basicRules: Array<BasicRule>;
     private caseRules: Array<CaseRule>;
     private contradictionRules: Array<ContradictionRule>;
@@ -65,13 +84,58 @@ export abstract class Puzzle {
         this.basicRules = [];
         this.caseRules = [];
         this.contradictionRules = [];
-        this.board = null;
+        this.currentBoard = null;
+        this.tree = null;
     }
 
-    initRules(caseRules: CaseRule[]) {
+    protected initRules(caseRules: CaseRule[]): void {
         this.caseRules = caseRules;
     }
 
+    public setTree(tree: Tree) {
+        this.tree = tree;
+    }
+
+    public setCurrentBoard(board: Board) {
+        this.currentBoard = board;
+    }
+
+}
+
+export abstract class PuzzleImporter {
+    private puzzle: Puzzle;
+
+    protected constructor(puzzle: Puzzle) {
+        this.puzzle = puzzle;
+    }
+
+    public importPuzzle() {
+        // TODO: call import board and proof here
+    }
+
+    abstract importBoard(input: object): void;
+
+    protected importProof() {
+        // TODO: import proof
+    }
+}
+
+export abstract class PuzzleExporter {
+    private puzzle: Puzzle;
+
+    protected constructor(puzzle: Puzzle) {
+        this.puzzle = puzzle;
+    }
+
+    public exportPuzzle() {
+        // TODO: call export board and proof here
+    }
+
+    abstract exportBoard(): object;
+
+    protected exportProof() {
+        // TODO: export proof
+    }
 }
 
 
