@@ -8,7 +8,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "lint": "eslint --ext .ts,.vue src tests",
-    "lint-fix": "eslint --ext .ts,.vue src tests --fix"
+    "lint-fix": "eslint --ext .ts,.vue src tests --fix",
+    "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
     "pinia": "^2.0.14",
@@ -27,6 +28,6 @@
     "typescript": "^4.5.4",
     "vite": "^2.9.9",
     "vitest": "^0.17.0",
-    "vue-tsc": "^0.34.7"
+    "vue-tsc": "^0.38.3"
   }
 }

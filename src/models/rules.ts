@@ -11,6 +11,10 @@ export abstract class Rule {
         this.description = description;
         this.image = image;
     }
+
+    public getName() {
+        return this.name;
+    }
 }
 
 

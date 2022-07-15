@@ -1,6 +1,4 @@
-import {GridCell, Location} from "@/models/puzzle";
-import {LightUpBoard} from "@/puzzles/lightup/board";
-
+import { GridCell, Location } from "@/models/puzzle";
 
 export enum LightUpCellType {
     Bulb = -3,
@@ -31,10 +29,16 @@ export class LightUpCell extends GridCell<number> {
     public setIsLit(isLit: boolean) {
         this.isLit = isLit;
     }
+
+    public copy(): LightUpCell {
+        const copy = new LightUpCell(this.data, this.location.copy());
+        copy.isLit = this.isLit;
+        return copy;
+    }
 }
 
 export const importCell = (): LightUpCell => {
 
 
-    //return new LightUpCell();
+    return new LightUpCell(0, new Location(0, 0));
 };

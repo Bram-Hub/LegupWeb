@@ -30,6 +30,9 @@
         "brace-style": [
             "error",
             "stroustrup"
+        ],
+        "@typescript-eslint/no-explicit-any": [
+            "off"
         ]
     },
     "parser": "vue-eslint-parser",

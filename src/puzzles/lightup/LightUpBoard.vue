@@ -1,7 +1,7 @@
 <template>
   <table class="board-table">
     <tr
-      v-for="(boardRow, rowIdx) in puzzle.board"
+      v-for="(boardRow, rowIdx) in puzzle.getAllElements"
       :key="rowIdx"
       class="cell-rw"
     >
@@ -10,20 +10,10 @@
         :key="cellIdx"
         class="cell-td"
       >
-<!--        <div-->
-<!--          class="cell"-->
-<!--          :class="{ lit: isLit(rowIdx, cellIdx), solid: isSolid(rowIdx, cellIdx) }"-->
-<!--          @click="emit('leftClick', rowIdx, cellIdx)"-->
-<!--          @contextmenu.prevent="emit('rightClick', rowIdx, cellIdx)"-->
-<!--        >-->
-<!--          <div -->
-<!--            class="cell-inner-wrapper"-->
-<!--            :class="{ 'white-text': isSolid(rowIdx, cellIdx) }"-->
-<!--          >-->
-<!--            {{ typeof(boardCell) === "number" && boardCell === 0 ? "" : boardCell }}-->
-<!--          </div>-->
-<!--        </div>-->
-        <LightUpCell :cell="boardCell" />
+        <LightUpCellComponent
+          :cell="boardCell as LightUpCell"
+          @click="lClick(boardCell as LightUpCell)"
+        />
       </td>
     </tr>
   </table>
@@ -31,39 +21,31 @@
 
 <script setup lang="ts">
 import { usePuzzleStore } from "@/store/puzzle";
-import LightUpCell from "@/puzzles/lightup/LightUpCell.vue";
+import LightUpCellComponent from "@/puzzles/lightup/LightUpCell.vue";
+import { LightUpCell, LightUpCellType } from "@/puzzles/lightup/cell";
+import { toRaw } from "vue";
 
 const puzzle = usePuzzleStore();
 
-const emit = defineEmits(["leftClick", "rightClick"]);
+const lClick = (cell: LightUpCell) => {
+    const newCell = toRaw(cell).copy();
+    console.log(newCell);
+    switch (cell.getType()) {
+    case LightUpCellType.Empty:
+        newCell.setData(LightUpCellType.Bulb);
+        break;
+    case LightUpCellType.Bulb:
+        newCell.setData(LightUpCellType.Empty);
+        break;
+    default:
+        return;
+    }
+    puzzle.updateCell(newCell);
+};
 
 </script>
 
 <style scoped>
-.cell {
-    width: 50px;
-    height: 50px;
-    background-color: lightgray;
-    border-color: black;
-    border-width: 1px;
-    border-style: solid;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: xx-large;
-}
-
-.cell:hover {
-    background-color: gray;
-    cursor: pointer;
-}
-
-.lit:hover {
-    background-color: lightyellow !important;
-}
-
 .cell-td {
     margin: 0;
     padding: 0;
@@ -77,24 +59,5 @@ const emit = defineEmits(["leftClick", "rightClick"]);
 .board-table {
     /*border-spacing: 0;*/
     border-collapse: collapse;
-}
-
-.lit {
-    background-color: yellow;
-}
-
-.solid {
-    background-color: black;
-}
-
-.cell-inner-wrapper {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.white-text {
-    color: white;
 }
 </style>

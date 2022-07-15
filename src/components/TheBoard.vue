@@ -4,21 +4,22 @@
 
 <script setup lang="ts">
 import { usePuzzleStore } from "@/store/puzzle";
-import { Puzzles } from "@/types";
 import { useRouter } from "vue-router";
+import { getBoardView } from "@/utils";
 
 const puzzle = usePuzzleStore();
 const router = useRouter();
-
-if (puzzle.currentPuzzle === null) {
+console.log(puzzle.puzzle);
+if (puzzle.puzzle === undefined || puzzle.puzzle.getCurrentBoard() === undefined) {
     router.push({
         "name": "puzzle-selector"
     });
 }
 
 const getPuzzle = () => {
-    if (puzzle.currentPuzzle !== null) {
-        return Puzzles[puzzle.currentPuzzle].boardView;
+    const puz = puzzle.puzzle;
+    if (puz !== undefined) {
+        return getBoardView(puz.getId());
     }
 };
 

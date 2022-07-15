@@ -1,17 +1,18 @@
 <template>
-  <TreePanel
-    id="test"
-    :tree="tree"
-  />
+  <!--  <TreePanel-->
+  <!--    id="test"-->
+  <!--    :tree="tree"-->
+  <!--  />-->
+  <p>WIP</p>
 </template>
 
 <script setup lang="ts">
-import TreePanel from "@/components/TreePanel.vue";
-import { reactive } from "vue";
-import { Tree } from "@/models/tree";
-import { GridBoard } from "@/models/puzzle";
+//import { usePuzzleStore } from "@/store/puzzle";
 
-let tree = reactive(new Tree(new GridBoard(10, 10)));
+//const puzzle = usePuzzleStore();
+
+//let tree = reactive(new TreeModel(new GridBoard(10, 10)));
+//let tree = puzzle.puzzle
 
 </script>
 

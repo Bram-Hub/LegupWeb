@@ -1,18 +1,22 @@
 <template>
   <h1>Legup</h1>
-<!--  <select v-model="selected">-->
-<!--    <option-->
-<!--      v-for="(val, name) in options"-->
-<!--      :key="val"-->
-<!--      :value="val"-->
-<!--    >-->
-<!--      {{ name }}-->
-<!--    </option>-->
-<!--  </select>-->
-<!--  <button @click="select">Select!</button>-->
+  <!--  <select v-model="selected">-->
+  <!--    <option-->
+  <!--      v-for="(val, name) in options"-->
+  <!--      :key="val"-->
+  <!--      :value="val"-->
+  <!--    >-->
+  <!--      {{ name }}-->
+  <!--    </option>-->
+  <!--  </select>-->
+  <!--  <button @click="select">Select!</button>-->
   <form @submit.prevent="open">
     <label for="puzzle-file-picker">Choose a puzzle file!</label><br>
-    <input type="file" id="puzzle-file-picker" @change="selectFile"><br>
+    <input
+      id="puzzle-file-picker"
+      type="file"
+      @change="selectFile"
+    ><br>
     <button type="submit">Open!</button>
   </form>
 </template>
@@ -21,49 +25,53 @@
 import { ref } from "vue";
 import { usePuzzleStore } from "@/store/puzzle";
 import { useRouter } from "vue-router";
-import {readJson} from "@/utils";
-
-const selected = ref();
+import { readJson } from "@/utils";
 
 const router = useRouter();
 
-const options = {
-    "Light Up": "lightup",
-    "Nurikabe": "nurikabe"
-};
-
 const puzzle = usePuzzleStore();
 
-const select = () => {
-    puzzle.currentPuzzle = selected.value;
+// const select = () => {
+//     // puzzle.currentPuzzle = selected.value;
+//     // router.push({
+//     //     name: "puzzle"
+//     // });
+// };
+
+const file = ref();
+
+const selectFile = (event: any) => {
+    const files = event.target.files;
+    if (files !== null) {
+        file.value = files[0];
+    }
+};
+
+const open = async () => {
+    const thing = await read(file);
+    const thePuzzle = await readJson(thing as string);
+
+    puzzle.setPuzzle(thePuzzle);
+
     router.push({
         name: "puzzle"
     });
 };
 
-const file = ref();
+const read = (file: any) => {
+    return new Promise((res, rej) => {
+        const fReader = new FileReader();
 
-const selectFile = (event: { target: HTMLInputElement }) => {
-    const files = event.target.files;
-    if (files !== null) {
-        file.value = files[0];
-    }
-}
+        fReader.onload = () => {
+            res(fReader.result);
+        };
 
-const open = () => {
-    const fReader = new FileReader();
-    fReader.onload = (event) => {
-        if (event.target) {
-            const res = event.target.result;
-            if (res) {
-                //console.log(JSON.parse(res
-                // as string));
+        fReader.onerror = () => {
+            rej();
+        };
 
-                readJson(res as string);
-            }
-        }
-    };
-    fReader.readAsText(file.value);
-}
+        fReader.readAsText(file.value);
+    });
+};
 
 </script>

@@ -1,7 +1,7 @@
 <template>
   <table class="board-table">
     <tr
-      v-for="(boardRow, rowIdx) in puzzle.board"
+      v-for="(boardRow, rowIdx) in puzzle.getAllElements"
       :key="rowIdx"
       class="cell-rw"
     >

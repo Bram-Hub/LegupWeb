@@ -1,12 +1,17 @@
 import { Puzzle } from "@/models/puzzle";
-import NurikabeBoard from "./NurikabeBoard.vue";
+import Board from "./NurikabeBoard.vue";
 
 class Nurikabe extends Puzzle {
     constructor() {
-        super(NurikabeBoard);
+        super(
+            "nurikabe",
+            "Nurikabe"
+        );
     }
 
 
 }
 
 export default Nurikabe;
+
+export { Board };
