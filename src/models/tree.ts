@@ -16,6 +16,18 @@ export abstract class TreeElement {
     protected constructor(board: Board) {
         this.board = board;
     }
+
+    public getBoard() {
+        return this.board;
+    }
+
+    public isNode() {
+        return this instanceof TreeNode;
+    }
+
+    public isTransition() {
+        return this instanceof TreeTransition;
+    }
 }
 
 export class TreeNode extends TreeElement {
@@ -37,11 +49,15 @@ export class TreeNode extends TreeElement {
     public getChildren() {
         return this.children;
     }
+
+    public addChild(transition: TreeTransition) {
+        this.children.push(transition);
+    }
 }
 
 export class TreeTransition extends TreeElement {
     private parents: TreeNode[];
-    private child: TreeNode | null;
+    private child?: TreeNode;
     private rule: Rule | null;
     private correct: boolean;
     private valid: boolean;
@@ -49,7 +65,7 @@ export class TreeTransition extends TreeElement {
     constructor(board: Board) {
         super(board);
         this.parents = [];
-        this.child = null;
+        this.child = undefined;
         this.rule = null;
         this.correct = false;
         this.valid = false;

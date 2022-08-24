@@ -1,5 +1,5 @@
 import { BasicRule, CaseRule, ContradictionRule } from "@/models/rules";
-import { Tree } from "@/models/tree";
+import {Tree, TreeElement} from "@/models/tree";
 
 
 export class Location {
@@ -28,14 +28,16 @@ export class Location {
 
 export abstract class Board {
     protected elements: (PuzzleElement<any> | null)[]; // eslint-disable-line @typescript-eslint/no-explicit-any
-    private modified: Set<PuzzleElement<any>>; // eslint-disable-line @typescript-eslint/no-explicit-any
-    private modifiable: boolean;
+    protected modified: Set<PuzzleElement<any>>; // eslint-disable-line @typescript-eslint/no-explicit-any
+    protected modifiable: boolean;
 
     protected constructor() {
         this.elements = [];
         this.modified = new Set<PuzzleElement<any>>(); // eslint-disable-line @typescript-eslint/no-explicit-any
         this.modifiable = true;
     }
+
+    public abstract copy(): Board;
 }
 
 export abstract class GridBoard extends Board {
@@ -64,6 +66,7 @@ export abstract class GridBoard extends Board {
     }
 
     public setCell(x: number, y: number, cell: GridCell<any>) {
+        this.modified.add(cell);
         this.elements[y * this.width + x] = cell;
         this.handleChange();
     }
@@ -74,11 +77,7 @@ export abstract class GridBoard extends Board {
     }
 
     public addCellWithoutUpdate(cell: GridCell<any>) {
-        const location = cell.getLocation();
-        this.elements[location.getY() * this.width + location.getX()] = cell;
-    }
-
-    protected setWithoutUpdate(cell: GridCell<any>) {
+        //this.modified.add(cell);
         const location = cell.getLocation();
         this.elements[location.getY() * this.width + location.getX()] = cell;
     }
@@ -95,6 +94,21 @@ export abstract class GridBoard extends Board {
             }
         }
         return array;
+    }
+
+    public copy(): GridBoard {
+        //const newBoard = new GridBoard(this.height, this.width);
+        // @ts-ignore
+        const newBoard: GridBoard = new this.constructor(this.height, this.width);
+        for (let i = 0; i < this.height * this.width; i++) {
+            let element = this.elements[i];
+            if (element !== null) {
+                element = element.copy();
+            }
+            newBoard.elements[i] = element;
+            //newBoard.elements.push(element);
+        }
+        return newBoard;
     }
 
     public abstract handleChange(): void;
@@ -141,6 +155,7 @@ export abstract class Puzzle {
     private readonly name: string;
 
     private currentBoard?: Board;
+    private currentTreeElement?: TreeElement;
     private tree?: Tree;
 
     private basicRules: Array<BasicRule>;
@@ -158,6 +173,7 @@ export abstract class Puzzle {
         this.contradictionRules = [];
         this.currentBoard = undefined;
         this.tree = undefined;
+        this.currentTreeElement = undefined;
         this.importer = undefined;
         this.exporter = undefined;
     }
@@ -180,6 +196,15 @@ export abstract class Puzzle {
 
     public setTree(tree: Tree) {
         this.tree = tree;
+        this.currentTreeElement = tree.root;
+    }
+
+    public setCurrentTreeElement(element: TreeElement) {
+        this.currentTreeElement = element;
+    }
+
+    public getCurrentTreeElement() {
+        return this.currentTreeElement;
     }
 
     public getCurrentBoard() {
@@ -202,6 +227,10 @@ export abstract class Puzzle {
         return this.exporter;
     }
 
+    public getTree() {
+        return this.tree;
+    }
+
 }
 
 export abstract class PuzzleImporter {
@@ -222,6 +251,11 @@ export abstract class PuzzleImporter {
     protected importProof(input: object) {
         console.log(input);
         // TODO: import proof
+        const curBoard = this.puzzle.getCurrentBoard();
+        if (curBoard !== undefined) {
+            let tree = new Tree(curBoard);
+            this.puzzle.setTree(tree);
+        }
     }
 }
 

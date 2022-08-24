@@ -26,7 +26,8 @@ export class LightUpBoard extends GridBoard {
                     let tmp_y = y;
                     while (tmp_x >= 0 && cell.getType() !== LightUpCellType.Number && cell.getType() !== LightUpCellType.Black) {
                         cell.setIsLit(true);
-                        this.setWithoutUpdate(cell);
+                        this.addCellWithoutUpdate(cell);
+                        //this.setWithoutUpdate(cell);
                         tmp_x--;
                         cell = this.getCell(tmp_x, tmp_y) as LightUpCell;
                     }
@@ -34,7 +35,8 @@ export class LightUpBoard extends GridBoard {
                     cell = this.getCell(tmp_x, tmp_y) as LightUpCell;
                     while (tmp_x < this.width && cell.getType() !== LightUpCellType.Number && cell.getType() !== LightUpCellType.Black) {
                         cell.setIsLit(true);
-                        this.setWithoutUpdate(cell);
+                        this.addCellWithoutUpdate(cell);
+                        //this.setWithoutUpdate(cell);
                         tmp_x++;
                         cell = this.getCell(tmp_x, tmp_y) as LightUpCell;
                     }
@@ -43,7 +45,8 @@ export class LightUpBoard extends GridBoard {
                     cell = this.getCell(tmp_x, tmp_y) as LightUpCell;
                     while (tmp_y >= 0 && cell.getType() !== LightUpCellType.Number && cell.getType() !== LightUpCellType.Black) {
                         cell.setIsLit(true);
-                        this.setWithoutUpdate(cell);
+                        this.addCellWithoutUpdate(cell);
+                        //this.setWithoutUpdate(cell);
                         tmp_y--;
                         cell = this.getCell(tmp_x, tmp_y) as LightUpCell;
                     }
@@ -51,7 +54,8 @@ export class LightUpBoard extends GridBoard {
                     cell = this.getCell(tmp_x, tmp_y) as LightUpCell;
                     while (tmp_y < this.height && cell !== undefined && cell.getType() !== LightUpCellType.Number && cell.getType() !== LightUpCellType.Black) {
                         cell.setIsLit(true);
-                        this.setWithoutUpdate(cell);
+                        this.addCellWithoutUpdate(cell);
+                        //this.setWithoutUpdate(cell);
                         tmp_y++;
                         cell = this.getCell(tmp_x, tmp_y) as LightUpCell;
                     }

@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 100 100">
+  <svg viewBox="0 0 100 100" width="100%" height="100%">
     <!--    <circle r="4" cy="50" cx="20" stroke="black" class="circle" stroke-width="0.3"></circle>-->
     <!--    <polygon points="36,50 33,52 33,48" stroke="black" class="tri" stroke-width="0.3"></polygon>-->
     <!--    <circle r="4" cy="50" cx="40" stroke="black" class="circle" stroke-width="0.3"></circle>-->
@@ -30,20 +30,17 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { Tree, TreeElement, TreeTransition, TreeNode } from "@/models/tree";
+import { TreeElement, TreeTransition, TreeNode } from "@/models/tree";
+import { usePuzzleStore } from "@/store/puzzle";
 
 const makePoints = (y: number, edge: number) => {
     return `${edge - 4},${y} ${edge - 7},${y + 2} ${edge - 7},${y - 2}`;
 };
 
-// const makePath = (elements: TreeElement[]) => {
-//
-// };
-
-//const elements = reactive<TreeElement[]>([]);
+const puzzle = usePuzzleStore();
 
 const elements = computed(() => {
-    let nodes: (TreeNode | null)[] = [props.tree.root];
+    let nodes: (TreeNode | undefined)[] = [puzzle.puzzle?.getTree()?.root];
     let transitions: TreeTransition[] = [];
     let nodeIndex = 0;
     let transitionIndex = 0;
@@ -51,7 +48,7 @@ const elements = computed(() => {
         let added = false;
         for (; nodeIndex < nodes.length; nodeIndex++) {
             let newTransitions = nodes[nodeIndex];
-            if (newTransitions !== null) {
+            if (newTransitions !== undefined) {
                 transitions = transitions.concat(newTransitions.getChildren());
             }
             added = true;
@@ -68,11 +65,7 @@ const elements = computed(() => {
     return (nodes as TreeElement[]).concat(transitions);
 });
 
-const props = defineProps<{
-    tree: Tree
-}>();
-
-
+console.log(elements.value);
 
 </script>
 
